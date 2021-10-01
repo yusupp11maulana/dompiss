@@ -81,7 +81,7 @@
     <div class="modal fade" id="tambahmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form action="<?= base_url()?>Home/tambahdata">
+                <form action="<?= base_url()?>Home/tambahdata" method="POST">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Tambah Saldo</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -91,7 +91,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default">Rp</span>
                             </div>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="nominal" autocomplete="OFF">
                         </div>
                     </div>                    
                     <div class="modal-footer">
