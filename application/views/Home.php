@@ -29,7 +29,7 @@
                             <img src="<?= base_url()?>assets/Icons/wallet.svg" alt="" style="width: 20%" class="align-content-center mb-4">
                             <h5 class="card-title font-weight-bold text-primary">Saldo Total</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Total Seluruh Saldo Tersimpan</h6>
-                            <h5 class="card-text">Rp 100.000</h5>
+                            <h5 class="card-text">Rp <?=  number_format($total,0,',','.')?></h5>
                         </div>
                     </div>
                 </div>
@@ -37,44 +37,37 @@
         </div>
 
         <div class="row justify-content-md-center">
+            <?php foreach ($getdata as $g):?>
             <div class="col-sm-4 mt-3">
-                <a href="<?= base_url()?>Detail_dompet" style="text-decoration:none; color: inherit;">
+                <a href="<?= base_url()?>Detail_dompet/getid/<?= $g['id_dompet']?>" style="text-decoration:none; color: inherit;">
                     <div class="card">
                         <div class="card-body">
                             <div class="container text-center">
                                 <img src="<?= base_url()?>assets/Icons/pisah.svg" alt="" style="width: 40%" class="align-content-center mb-4">
-                                <h5 class="card-title font-weight-bold text-primary">Investasi</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">60%</h6>
-                                <h5 class="card-text">Rp 100.000</h5>
+                                <h5 class="card-title font-weight-bold text-primary"><?= $g['nama_dompet']?></h5>
+                                <h6 class="card-subtitle mb-2 text-muted"><?= $g['presentase']?>%</h6>
+                                <?php 
+                                    $this->db->select_sum('jumlah');
+                                    $this->db->where('status', 'masuk');
+                                    $this->db->where('id_dompet', $g['id_dompet']);
+                                    $pemasukan = $this->db->get('detail_dompet')->row_array()['jumlah'];
+
+                                    $this->db->select_sum('jumlah');
+                                    $this->db->where('status', 'keluar');
+                                    $this->db->where('id_dompet', $g['id_dompet']);
+                                    $pengeluaran = $this->db->get('detail_dompet')->row_array()['jumlah'];
+
+                                    $hasil = $pemasukan - $pengeluaran;
+                                    if(!$hasil){
+                                        $hasil = 0;
+                                    }?>
+                                <h5 class="card-text">Rp <?= number_format($hasil,0,',','.')?></h5>
                             </div>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="col-sm-4 mt-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="container text-center">
-                            <img src="<?= base_url()?>assets/Icons/pisah.svg" alt="" style="width: 40%" class="align-content-center mb-4">
-                            <h5 class="card-title font-weight-bold text-primary">Kebutuhan</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">60%</h6>
-                            <h5 class="card-text">Rp 100.000</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4 mt-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="container text-center">
-                            <img src="<?= base_url()?>assets/Icons/pisah.svg" alt="" style="width: 40%" class="align-content-center mb-4">
-                            <h5 class="card-title font-weight-bold text-primary">Pegangan</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">60%</h6>
-                            <h5 class="card-text">Rp 100.000</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php endforeach;?>
         </div>
 
         <div class="row mt-4">
@@ -88,7 +81,7 @@
     <div class="modal fade" id="tambahmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form action="">
+                <form action="<?= base_url()?>Home/tambahdata">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Tambah Saldo</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
