@@ -5,7 +5,7 @@ class Home extends CI_Controller {
 	public function __construct(){
         parent::__construct();
 		fungsilogin();
-		$sesi = array();
+		$sesi = ['id_dompet'];
 		hapussesi($sesi);
         $this->load->model('Model_view', 'view');
         $this->load->model('Model_operation', 'operasi');
@@ -44,7 +44,7 @@ class Home extends CI_Controller {
 					'tanggal' => date('Y-m-d'),
 					'waktu' => date('H:i:s'),
 					'keterangan' => 'Saldo Tambahan',
-					'status' => 'masuk'
+					'status' => 'Masuk'
 				);
 				$this->operasi->add($detail, 'detail_dompet');
 			}

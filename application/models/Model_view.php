@@ -23,4 +23,10 @@ class Model_view extends CI_Model
         }
         return $hasil;
     }
+
+    public function getdatawhere($data, $tabel, $where){
+        $this->db->select($data);
+        $this->db->where($where);
+        return $this->db->get($tabel)->result_array();
+    }
 }

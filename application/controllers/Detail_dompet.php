@@ -13,10 +13,25 @@ class Detail_dompet extends CI_Controller {
     }
 
 	public function index(){
-		$data = array(
-			'title' => "Detail Dompet - Dompet Pisah",
-		);
-		$this->load->view('Detail', $data);
+		if(!$this->session->userdata('id_dompet')){
+			redirect('Home');
+		} else {
+			$data['title'] = "Detail Dompet - Dompet Pisah";
+			$masuk = [
+				'id_dompet'=> $this->session->userdata('id_dompet'),
+				'status' => 'Masuk',
+			];
+
+			$keluar = [
+				'id_dompet'=> $this->session->userdata('id_dompet'),
+				'status' => 'Keluar',
+			];
+			$data['masuk'] = $this->view->getdatawhere('*','detail_dompet',$masuk);
+			$data['keluar'] = $this->view->getdatawhere('*','detail_dompet',$keluar);
+
+			// var_dump($data);die;
+			$this->load->view('Detail', $data);
+		}
 	}
 
 	public function getid($id){

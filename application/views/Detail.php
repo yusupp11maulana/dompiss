@@ -55,21 +55,21 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th scope="col" style="width: 15%">ID</th>
+                                            <th scope="col" style="width: 15%">No</th>
                                             <th scope="col" style="width: 25%">Jumlah</th>
                                             <th scope="col">Tanggal</th>
                                             <th scope="col">Keterangan</th>
-                                            <th scope="col" style="width: 10%">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td scope="row">1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>Ket</td>
-                                            <td><button class="btn btn-danger">Hapus</button></td>
-                                        </tr>
+                                        <?php foreach($masuk as $m):$n=1;?>
+                                            <tr>
+                                                <td><?= $n++?></td>
+                                                <td><?= $m['jumlah']?></td>
+                                                <td><?= date('d F Y', strtotime($m['tanggal'])).'&emsp;'.$m['waktu']?></td>
+                                                <td><?= $m['keterangan']?></td>
+                                            </tr>
+                                        <?php endforeach;?>
                                     </tbody>
                                 </table>                    
                             </div>
@@ -89,13 +89,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <?php foreach($keluar as $k):$n=1;?>
                                         <tr>
-                                            <td scope="row">1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>Ket</td>
+                                             <td><?= $n++?></td>
+                                                <td><?= $k['jumlah']?></td>
+                                                <td><?= date('d F Y', strtotime($k['tanggal'])).'&emsp;'.$k['waktu']?></td>
+                                                <td><?= $k['keterangan']?></td>
                                             <td><button class="btn btn-danger">Hapus</button></td>
                                         </tr>
+                                        <?php endforeach;?>
                                     </tbody>
                                 </table>                    
                             </div>
