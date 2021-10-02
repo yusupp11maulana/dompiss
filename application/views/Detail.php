@@ -7,7 +7,7 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-
+        <link rel="icon" href="<?= base_url()?>assets/Icons/wallet.png">
         <title><?= $title?></title>
     </head>
     <body>
@@ -95,7 +95,7 @@
                                                 <td>Rp <?= number_format($k['jumlah'],0,',','.')?></td>
                                                 <td><?= date('d F Y', strtotime($k['tanggal'])).'&emsp;'.$k['waktu']?></td>
                                                 <td><?= $k['keterangan']?></td>
-                                            <td><button class="btn btn-danger">Hapus</button></td>
+                                            <td><a href="<?= base_url()?>Detail_dompet/hapus/<?= $k['id_detail']?>/<?= $id_wallet?>"><button class="btn btn-danger">Hapus</button></td></>
                                         </tr>
                                         <?php endforeach;?>
                                     </tbody>

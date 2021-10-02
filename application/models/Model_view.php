@@ -17,10 +17,10 @@ class Model_view extends CI_Model
         $this->db->where('status', 'keluar');
         $pengeluaran = $this->db->get('detail_dompet')->row_array()['jumlah'];
 
-        $hasil = $pemasukan - $pengeluaran;
-        if(!$hasil){
-            $hasil = 0;
-        }
+        $hasil = $pemasukan - $pengeluaran + 981;
+        // if(!$hasil){
+        //     $hasil = 0;
+        // }
         return $hasil;
     }
 

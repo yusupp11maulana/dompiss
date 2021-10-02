@@ -37,6 +37,8 @@ class Home extends CI_Controller {
 
 			// Detail_dompet
 			$id = $this->operasi->dompet();
+
+			$pemasukan_id = $this->operasi->pemasukan();
 			foreach($id as $d){
 				$detail = array(
 					'id_dompet' => $d['id_dompet'],
@@ -44,7 +46,8 @@ class Home extends CI_Controller {
 					'tanggal' => date('Y-m-d'),
 					'waktu' => date('H:i:s'),
 					'keterangan' => 'Saldo Tambahan',
-					'status' => 'Masuk'
+					'status' => 'Masuk',
+					'id_pemasukan' => $pemasukan_id,
 				);
 				$this->operasi->add($detail, 'detail_dompet');
 			}

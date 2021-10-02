@@ -7,17 +7,18 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-
+    <link rel="icon" href="<?= base_url()?>assets/Icons/wallet.png">
     <title><?= $title?></title>
   </head>
   <body>
       <div class="container">
           <div class="row justify-content-md-center">
               <div class="col-md-6">
-                  <div class="card shadow" style="margin-top: 50%">
+                  <div class="card shadow" style="margin-top: 30%">
                     <div class="card-body">
                         <form action="<?= base_url()?>" method="POST">
-                            <h3 class="mb-4 text-center">Log In</h3>
+                            <center><img src="<?= base_url()?>assets/Icons/ucup_ava.png" alt="" class="rounded-circle mb-3" style="width: 20%"></center>
+                            <p class="text-center">LOGIN</p>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Username</label>
                                 <input type="text" name="username" class="form-control" autocomplete="OFF">

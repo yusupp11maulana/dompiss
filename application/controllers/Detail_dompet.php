@@ -67,4 +67,13 @@ class Detail_dompet extends CI_Controller {
 			redirect('Detail_dompet/getid/'.$id);
         }
 	}
+
+	public function hapus($id, $dompet){
+		$delete = [
+			'id_detail' => $id
+		];
+		$this->operasi->delete('detail_dompet', $delete);
+		redirect('Detail_dompet/getid/'.$dompet);
+
+	}
 }
