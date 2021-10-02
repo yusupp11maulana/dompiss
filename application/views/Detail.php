@@ -26,9 +26,9 @@
                         <div class="card-body">
                             <div class="container text-center">
                                 <img src="<?= base_url()?>assets/Icons/pisah.svg" alt="" style="width: 20%" class="align-content-center mb-4">
-                                <h5 class="card-title font-weight-bold text-primary">Kebutuhan</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">60%</h6>
-                                <h5 class="card-text">Rp 100.000</h5>
+                                <h5 class="card-title font-weight-bold text-primary"><?= $dompet['nama_dompet']?></h5>
+                                <h6 class="card-subtitle mb-2 text-muted"><?= $dompet['presentase']?>%</h6>
+                                <h5 class="card-text">Rp <?= number_format($saldo,0,',','.')?></h5>
                             </div>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                                         <?php foreach($masuk as $m):$n=1;?>
                                             <tr>
                                                 <td><?= $n++?></td>
-                                                <td><?= $m['jumlah']?></td>
+                                                <td>Rp <?= number_format($m['jumlah'],0,',','.')?></td>
                                                 <td><?= date('d F Y', strtotime($m['tanggal'])).'&emsp;'.$m['waktu']?></td>
                                                 <td><?= $m['keterangan']?></td>
                                             </tr>
@@ -92,7 +92,7 @@
                                         <?php foreach($keluar as $k):$n=1;?>
                                         <tr>
                                              <td><?= $n++?></td>
-                                                <td><?= $k['jumlah']?></td>
+                                                <td>Rp <?= number_format($k['jumlah'],0,',','.')?></td>
                                                 <td><?= date('d F Y', strtotime($k['tanggal'])).'&emsp;'.$k['waktu']?></td>
                                                 <td><?= $k['keterangan']?></td>
                                             <td><button class="btn btn-danger">Hapus</button></td>
@@ -108,7 +108,7 @@
             <div class="modal fade" id="keluar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
-                        <form action="" method="POST">
+                        <form action="<?= base_url()?>Detail_dompet/pengeluaran/<?= $id_wallet?>" method="POST">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Tarik Saldo</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -118,13 +118,13 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroup-sizing-default">Nominal Rp</span>
                                     </div>
-                                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                    <input type="text" class="form-control" aria-label="Sizing example input" name="nominal" aria-describedby="inputGroup-sizing-default" autocomplete="OFF">
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroup-sizing-default">Keterangan  </span>
                                     </div>
-                                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                    <input type="text" class="form-control" aria-label="Sizing example input" name="keterangan" aria-describedby="inputGroup-sizing-default" autocomplete="OFF">
                                 </div>
                             </div>                    
                             <div class="modal-footer">
