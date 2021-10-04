@@ -13,9 +13,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap" rel="stylesheet">
     <link rel="icon" href="<?= base_url()?>assets/Icons/wallet.png">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title><?= $title?></title>
   </head>
   <body>
+    <?php if ($this->session->flashdata('data')) {
+        if ($this->session->flashdata('data') == "Berhasil") {
+            echo '<script>Swal.fire("Berhasil", "Data Tersimpan", "success");</script>';
+            unset($_SESSION['data']);
+        } else if ($this->session->flashdata('data') == "Salah") {
+            echo '<script>Swal.fire("Gagal", "Isilah Data Dengan Benar", "error");</script>';
+            unset($_SESSION['data']);
+        }
+    }
+    ?>
     <div class="container mt-4">
         <div class="row mt-4">
             <div class="col">
@@ -71,8 +82,8 @@
             <?php endforeach;?>
         </div>
 
-        <div class="row mt-4">
-            <div class="col">
+        <div class="row mt-4 mb-4">
+            <div class="col mb-4">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahmodal">Tambah Saldo</button>
                 <a href="<?= base_url()?>Login/logout"><button class="btn btn-danger">Logout</button></a>
             </div>
@@ -92,7 +103,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default">Rp</span>
                             </div>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="nominal" autocomplete="OFF">
+                            <input type="text" class="form-control" id="rupiah" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="nominal" autocomplete="OFF">
                         </div>
                     </div>                    
                     <div class="modal-footer">
@@ -105,5 +116,31 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+    $(function(){
+        $("#rupiah").keyup(function(e){
+            $(this).val(format($(this).val()));
+        });
+    });
+    var format = function(num){
+        var str = num.toString().replace("", ""), parts = false, output = [], i = 1, formatted = null;
+        if(str.indexOf(".") > 0) {
+            parts = str.split(".");
+            str = parts[0];
+        }
+        str = str.split("").reverse();
+        for(var j = 0, len = str.length; j < len; j++) {
+            if(str[j] != ",") {
+            output.push(str[j]);
+            if(i%3 == 0 && j < (len - 1)) {
+                output.push(",");
+            }
+            i++;
+            }
+        }
+        formatted = output.reverse().join("");
+        return("" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ""));
+    };
+	</script>
   </body>
 </html>

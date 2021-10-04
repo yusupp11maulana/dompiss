@@ -24,14 +24,16 @@ class Home extends CI_Controller {
 	public function tambahdata(){
 		$this->form_validation->set_rules('nominal', 'Nominal Uang', 'trim|required');
 		if ($this->form_validation->run() == false) {
+			$this->session->set_flashdata('data', 'Gagal');
 			redirect('Home');
         } else {
 			// Pemasukan
 			date_default_timezone_set('Asia/Jakarta');
+			$uang = preg_replace("/[^0-9]/", "", $this->input->post('nominal', TRUE));
 			$pemasukan = array(
 				'tanggal_masuk' => date('Y-m-d'),
 				'waktu_masuk' => date('H:i:s'),
-				'nominal' => $this->input->post('nominal', TRUE),
+				'nominal' => $uang,
 			);
 			$this->operasi->add($pemasukan, 'pemasukan');
 
@@ -42,7 +44,7 @@ class Home extends CI_Controller {
 			foreach($id as $d){
 				$detail = array(
 					'id_dompet' => $d['id_dompet'],
-					'jumlah' => round(($d['presentase']/100) * $this->input->post('nominal', TRUE)),
+					'jumlah' => round(($d['presentase']/100) * $uang),
 					'tanggal' => date('Y-m-d'),
 					'waktu' => date('H:i:s'),
 					'keterangan' => 'Saldo Tambahan',
@@ -51,6 +53,7 @@ class Home extends CI_Controller {
 				);
 				$this->operasi->add($detail, 'detail_dompet');
 			}
+			$this->session->set_flashdata('data', 'Berhasil');
 			redirect('Home');
         }
 	}

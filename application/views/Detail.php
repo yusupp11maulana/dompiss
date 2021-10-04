@@ -8,9 +8,20 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
         <link rel="icon" href="<?= base_url()?>assets/Icons/wallet.png">
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <title><?= $title?></title>
     </head>
     <body>
+        <?php if ($this->session->flashdata('data')) {
+            if ($this->session->flashdata('data') == "Berhasil") {
+                echo '<script>Swal.fire("Berhasil", "Data Tersimpan", "success");</script>';
+                unset($_SESSION['data']);
+            } else if ($this->session->flashdata('data') == "Salah") {
+                echo '<script>Swal.fire("Gagal", "Isilah Data Dengan Benar", "error");</script>';
+                unset($_SESSION['data']);
+            }
+        }
+        ?>
         <div class="container mt-4">
             <div class="row mb-4">
                 <div class="col">
@@ -48,7 +59,7 @@
                         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Keluar</a>
                     </li>
                 </ul>
-                <div class="tab-content" id="myTabContent">
+                <div class="tab-content mb-4" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <div class="row">
                             <div class="col">
@@ -95,7 +106,7 @@
                                                 <td>Rp <?= number_format($k['jumlah'],0,',','.')?></td>
                                                 <td><?= date('d F Y', strtotime($k['tanggal'])).'&emsp;'.$k['waktu']?></td>
                                                 <td><?= $k['keterangan']?></td>
-                                            <td><a href="<?= base_url()?>Detail_dompet/hapus/<?= $k['id_detail']?>/<?= $id_wallet?>"><button class="btn btn-danger">Hapus</button></td></>
+                                            <td><a href="<?= base_url()?>Detail_dompet/hapus/<?= $k['id_detail']?>/<?= $id_wallet?>" class="tombol-hapus"><button class="btn btn-danger">Hapus</button></td></>
                                         </tr>
                                         <?php endforeach;?>
                                     </tbody>
@@ -118,7 +129,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroup-sizing-default">Nominal Rp</span>
                                     </div>
-                                    <input type="text" class="form-control" aria-label="Sizing example input" name="nominal" aria-describedby="inputGroup-sizing-default" autocomplete="OFF">
+                                    <input type="text" class="form-control" aria-label="Sizing example input" name="nominal" id="rupiah" aria-describedby="inputGroup-sizing-default" autocomplete="OFF">
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
@@ -139,6 +150,51 @@
         <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+        <script>
+            $('.tombol-hapus').on('click', function (e){
+                e.preventDefault();
+                const hrefnya = $(this).attr('href');
 
+                Swal.fire({
+                    title: 'Menghapus Data Ini',
+                    text: "Apakah anda yakin?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if (result.value) {
+                        document.location.href=hrefnya;
+                    }
+                })
+            });
+        </script>
+        <script type="text/javascript">
+        $(function(){
+            $("#rupiah").keyup(function(e){
+                $(this).val(format($(this).val()));
+            });
+        });
+        var format = function(num){
+            var str = num.toString().replace("", ""), parts = false, output = [], i = 1, formatted = null;
+            if(str.indexOf(".") > 0) {
+                parts = str.split(".");
+                str = parts[0];
+            }
+            str = str.split("").reverse();
+            for(var j = 0, len = str.length; j < len; j++) {
+                if(str[j] != ",") {
+                output.push(str[j]);
+                if(i%3 == 0 && j < (len - 1)) {
+                    output.push(",");
+                }
+                i++;
+                }
+            }
+            formatted = output.reverse().join("");
+            return("" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ""));
+        };
+        </script>
     </body>
 </html>

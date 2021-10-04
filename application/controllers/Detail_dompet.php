@@ -28,10 +28,9 @@ class Detail_dompet extends CI_Controller {
 				'status' => 'Keluar',
 			];
 			$dompet = ['id_dompet' => $data['id_wallet'] ];
-
 			$data['dompet'] = $this->view->getdatawhererow('*','dompet',$dompet);
-			$data['masuk'] = $this->view->getdatawhere('*','detail_dompet',$masuk);
-			$data['keluar'] = $this->view->getdatawhere('*','detail_dompet',$keluar);
+			$data['masuk'] = $this->view->getdatawheredesc('*','detail_dompet',$masuk, 'id_detail', 'DESC');
+			$data['keluar'] = $this->view->getdatawheredesc('*','detail_dompet',$keluar, 'id_detail', 'DESC');
 			$data['saldo'] = $this->view->sumdompet($dompet);
 
 			// var_dump($data);die;
@@ -52,18 +51,22 @@ class Detail_dompet extends CI_Controller {
 		$this->form_validation->set_rules('nominal', 'Nominal Uang', 'trim|required');
 		$this->form_validation->set_rules('keterangan', 'Nominal Uang', 'trim|required');
 		if ($this->form_validation->run() == false) {
+			$this->session->set_flashdata('data', 'Salah');
 			redirect('Detail_dompet/getid/'.$id);
         } else {
 			$in = $this->input->post(null, TRUE);
+			$uang = preg_replace("/[^0-9]/", "", $in['nominal'], TRUE);
 			$pengeluaran =  array(
 				'id_dompet' => $id,
-				'jumlah' => $in['nominal'],
+				'jumlah' => $uang,
 				'tanggal' => date('Y-m-d'),
 				'waktu' => date('H:i:s'),
 				'keterangan' => $in['keterangan'],
-				'status' => 'Keluar'
+				'status' => 'Keluar',
+				'id_pemasukan' => '-',
 			);
 			$this->operasi->add($pengeluaran, 'detail_dompet');
+			$this->session->set_flashdata('data', 'Berhasil');
 			redirect('Detail_dompet/getid/'.$id);
         }
 	}
@@ -73,6 +76,7 @@ class Detail_dompet extends CI_Controller {
 			'id_detail' => $id
 		];
 		$this->operasi->delete('detail_dompet', $delete);
+		$this->session->set_flashdata('data', 'Berhasil');		
 		redirect('Detail_dompet/getid/'.$dompet);
 
 	}
