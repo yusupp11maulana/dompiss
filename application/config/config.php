@@ -25,6 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 // $config['base_url'] = 'http://192.168.68.109/dompis/';
 $config['base_url'] = 'http://localhost/dompis/';
+// $config['base_url'] = 'https://dompiss.00webhostapp.com/';
 
 /*
 |--------------------------------------------------------------------------
