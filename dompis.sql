@@ -38,7 +38,7 @@ CREATE TABLE `akun` (
 --
 
 INSERT INTO `akun` (`id_akun`, `username`, `password`) VALUES
-(1, 'haiucup', '$2a$12$RkJY3oxOrc9ivs4GqOJ6/.deIDs461d/1XQKu2JMvtCW08.4m7Iia');
+(1, 'haiucup', '$2y$10$ttLfyCOJRHhd2c9PUEwRXOdhC5MPncaxdrkIF4glANszjTDctbDVW');
 
 -- --------------------------------------------------------
 
